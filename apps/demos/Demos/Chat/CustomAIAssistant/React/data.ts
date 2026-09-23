@@ -1,9 +1,9 @@
 import type { ChatTypes } from 'devextreme-react/chat';
 import type { DataGridTypes, DataGridRef } from 'devextreme-react/data-grid';
-import type { FormRef } from 'devextreme-react/form';
+import type { FormRef, FormTypes } from 'devextreme-react/form';
 import type { AIIntegration } from 'devextreme-react/common/ai-integration';
-import type { FormItemComponent } from 'devextreme/ui/form';
 import type { OpenAI } from 'openai';
+import type { RefObject } from 'react';
 
 export type TaskPriority = 'High' | 'Normal' | 'Low';
 export type RouterTarget = 'form' | 'grid' | 'mixed' | 'none';
@@ -12,7 +12,6 @@ export type FilterOperation = '=' | '<>' | '<' | '<=' | '>' | '>=' | 'contains' 
 
 export type TaskGrid = ReturnType<DataGridRef['instance']>;
 export type EmployeeForm = ReturnType<FormRef['instance']>;
-export type InstanceRef<T> = { current: T | null };
 export type ColumnFilterExpression = [(rowData: Task) => number, FilterOperation, number];
 
 export type ChatMessage = ChatTypes.Message;
@@ -47,7 +46,7 @@ export interface FormFieldOption {
 export interface FormFieldDescriptor {
   dataField: string;
   label: { text: string };
-  editorType?: FormItemComponent;
+  editorType?: FormTypes.FormItemComponent;
   editorOptions?: Record<string, unknown>;
   aiOptions: { instruction: string };
 }
@@ -112,18 +111,18 @@ export interface RouteMessageContext extends RouterContext {
 }
 
 export interface AiAssistantProps {
-  formRef: InstanceRef<FormRef>;
-  gridRef: InstanceRef<DataGridRef>;
+  formRef: RefObject<FormRef | null>;
+  gridRef: RefObject<DataGridRef | null>;
   aiIntegration: AIIntegration;
 }
 
 export interface EmployeeFormProps {
   aiIntegration: AIIntegration;
-  formRef: InstanceRef<FormRef>;
+  formRef: RefObject<FormRef | null>;
 }
 
 export interface TaskGridProps {
-  gridRef: InstanceRef<DataGridRef>;
+  gridRef: RefObject<DataGridRef | null>;
 }
 
 export type AIResult = Record<string, unknown>;
@@ -218,7 +217,7 @@ export const formFieldOptions: FormFieldOption[] = [
   { dataField: 'BirthDate', label: 'Birth Date' },
 ];
 
-export const formFieldsConfig: FormFieldDescriptor[] = [
+export const formFieldsConfig: FormTypes.SimpleItem[] = [
   { dataField: 'Prefix', label: { text: 'Title' }, editorType: 'dxSelectBox', editorOptions: { items: titles, searchEnabled: true }, aiOptions: { instruction: 'Only fill this field with one of the allowed values (Mr., Mrs., Ms.) if a title is explicitly mentioned in the text. Never use this field for any part of a person\'s name.' } },
   { dataField: 'FirstName', label: { text: 'First Name' }, aiOptions: { instruction: "Only fill this field if the text clearly refers to a person's given name. Never use grid/task-related words like Subject, Priority, Status, Due Date, Completion, or generic verbs like sort/filter/show as a name." } },
   { dataField: 'LastName', label: { text: 'Last Name' }, aiOptions: { instruction: "If the text gives a full person name (e.g. 'customer name', 'employee name') without separately labeled first/last names, use only the first word as First Name and the rest of the name as Last Name." } },
