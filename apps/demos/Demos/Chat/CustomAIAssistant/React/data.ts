@@ -43,14 +43,6 @@ export interface FormFieldOption {
   label: string;
 }
 
-export interface FormFieldDescriptor {
-  dataField: string;
-  label: { text: string };
-  editorType?: FormTypes.FormItemComponent;
-  editorOptions?: Record<string, unknown>;
-  aiOptions: { instruction: string };
-}
-
 export interface CommandResult {
   status: 'success' | 'failure';
   message: string;
