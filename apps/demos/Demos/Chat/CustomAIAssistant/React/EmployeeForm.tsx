@@ -1,5 +1,5 @@
 import React, { useCallback, useMemo, useState } from 'react';
-import { Form, Item, ButtonItem } from 'devextreme-react/form';
+import { Form, SimpleItem, ButtonItem } from 'devextreme-react/form';
 import type { FormTypes } from 'devextreme-react/form';
 
 import { Toast } from 'devextreme-react/toast';
@@ -43,7 +43,7 @@ export default function EmployeeForm({ aiIntegration, formRef }: EmployeeFormPro
         aiIntegration={aiIntegration}
         onOptionChanged={onOptionChanged}
       >
-        {formFieldsConfig.map((field) => <Item key={field.dataField} {...field} />)}
+        {formFieldsConfig.map((field) => <SimpleItem key={field.dataField} {...field} />)}
         <ButtonItem name="Save" colSpan={3} cssClass="save-button" buttonOptions={buttonOptions} />
       </Form>
       <Toast
