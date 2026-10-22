@@ -1,6 +1,6 @@
 /* eslint-disable max-classes-per-file */
 import { equalByValue } from '@js/core/utils/common';
-import type { RowsView } from '@ts/grids/grid_core/views/m_rows_view';
+import type { RowsView } from '@ts/grids/grid_core/views/rows_view';
 
 import type { ModuleType } from '../types';
 import {
@@ -58,14 +58,14 @@ const editingControllerExtender = (Base: ModuleType<EditingController>) => class
     return this.isRowBasedEditMode() && this.isEditRowByIndex(rowIndex);
   }
 
-  protected _cancelSaving(result) {
+  protected _cancelSaving(saveDeferred) {
     if (this.isRowBasedEditMode()) {
       if (!this.hasChanges()) {
         this._cancelEditDataCore();
       }
     }
 
-    super._cancelSaving(result);
+    super._cancelSaving(saveDeferred);
   }
 
   protected _refreshCore(params) {
